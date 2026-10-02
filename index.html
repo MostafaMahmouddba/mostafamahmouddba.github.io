@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mostafa Mahmoud — Business Analyst & Product Owner</title>
+<meta name="description" content="Mostafa Mahmoud — Senior Business Analyst & Product Owner based in Cairo. 4+ years turning business goals into clear, buildable products.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f6f7fb; --card:#ffffff; --ink:#0f172a; --muted:#5b6475; --line:#e4e7ef;
+    --accent:#2457d6; --accent-soft:#e8eefc; --accent-2:#0ea5a4; --chip:#f1f3f8;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#0b1020; --card:#131a2e; --ink:#e7ebf5; --muted:#9aa4bb; --line:#222b44;
+      --accent:#6d93ff; --accent-soft:#1b2747; --accent-2:#2dd4bf; --chip:#1a2238;
+    }
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;font-size:15px}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  h1,h2,h3{font-family:"Space Grotesk",Inter,sans-serif;line-height:1.25}
+  .wrap{max-width:1180px;margin:0 auto;padding:32px 16px;display:grid;grid-template-columns:320px 1fr;gap:28px;align-items:start}
+
+  /* Sidebar */
+  aside{position:sticky;top:24px;display:flex;flex-direction:column;gap:18px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px}
+  .avatar{width:96px;height:96px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;display:grid;place-items:center;font:700 34px "Space Grotesk",sans-serif;margin-bottom:14px;overflow:hidden;position:relative}
+  .avatar img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .name{font-size:24px}
+  .role{color:var(--accent);font-weight:600;margin:2px 0 10px}
+  .meta{color:var(--muted);font-size:14px;display:flex;flex-direction:column;gap:4px}
+  .badge{display:inline-block;margin-top:12px;background:var(--accent-soft);color:var(--accent);font-size:12.5px;font-weight:600;padding:5px 10px;border-radius:999px}
+  .label{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:600;margin-bottom:10px}
+  .contact a{display:block;font-size:14px;margin-bottom:6px;word-break:break-all}
+  .chips{display:flex;flex-wrap:wrap;gap:7px}
+  .chip{background:var(--chip);border:1px solid var(--line);border-radius:999px;padding:4px 10px;font-size:12.5px;font-weight:500}
+  .lang{display:flex;justify-content:space-between;font-size:14px;padding:4px 0}
+  .lang span:last-child{color:var(--muted)}
+
+  /* Main */
+  main{display:flex;flex-direction:column;gap:28px;min-width:0}
+  .hero{padding:34px}
+  .eyebrow{color:var(--accent-2);font-weight:600;font-size:13px;letter-spacing:.04em;text-transform:uppercase}
+  .hero h1{font-size:clamp(28px,4vw,40px);margin:10px 0 14px}
+  .hero p{color:var(--muted);max-width:720px}
+  .hero strong{color:var(--ink)}
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:22px}
+  .stat{background:var(--chip);border-radius:14px;padding:14px}
+  .stat b{display:block;font:700 24px "Space Grotesk",sans-serif;color:var(--accent)}
+  .stat span{font-size:13px;color:var(--muted)}
+
+  .process{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+  .step{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;position:relative}
+  .step .n{font:700 12px "Space Grotesk",sans-serif;color:var(--accent-2)}
+  .step h3{font-size:16px;margin:4px 0 6px}
+  .step p{font-size:13px;color:var(--muted)}
+
+  section h2{font-size:24px;margin-bottom:16px}
+  .timeline{display:flex;flex-direction:column;gap:14px}
+  .job{border-left:3px solid var(--accent);padding:4px 0 4px 18px}
+  .job-head{display:flex;justify-content:space-between;flex-wrap:wrap;gap:4px 12px}
+  .job h3{font-size:17px}
+  .job .co{color:var(--accent)}
+  .when{font-size:13px;color:var(--muted);white-space:nowrap}
+  .where{font-size:13px;color:var(--muted);margin-bottom:6px}
+  .job p{font-size:14.5px}
+
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+  .proj h3{font-size:17px;margin-bottom:6px}
+  .tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+  .tag{font-size:11.5px;font-weight:600;color:var(--accent);background:var(--accent-soft);padding:3px 8px;border-radius:6px}
+  .proj p{font-size:14px;color:var(--muted)}
+  .solves{margin-top:10px;font-size:14px;color:var(--ink)!important}
+  .solves b{color:var(--accent-2)}
+
+  .edu li{list-style:none;padding:8px 0;border-bottom:1px dashed var(--line);font-size:14.5px}
+  .edu li:last-child{border-bottom:0}
+  .edu .y{color:var(--muted);font-size:13px}
+
+  .cta{text-align:center;padding:40px 24px;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;border:0}
+  .cta h2{color:#fff;margin-bottom:8px}
+  .btn{display:inline-block;margin-top:14px;background:#fff;color:#0f172a;font-weight:600;padding:11px 22px;border-radius:999px}
+  .btn:hover{text-decoration:none;opacity:.92}
+  footer{text-align:center;color:var(--muted);font-size:13px;padding:8px 0 24px}
+
+  @media (max-width:960px){
+    .wrap{grid-template-columns:1fr}
+    aside{position:static}
+    .process{grid-template-columns:repeat(2,1fr)}
+  }
+  @media (max-width:560px){
+    .hero{padding:22px}
+    .grid,.stats{grid-template-columns:1fr}
+    .process{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ============ SIDEBAR ============ -->
+  <aside>
+    <div class="card">
+      <!-- Upload your photo as photo.jpg next to this file. If it's missing, the initials show instead. -->
+      <div class="avatar"><span>MM</span><img src="photo.jpg" alt="Mostafa Mahmoud" onerror="this.remove()"></div>
+      <h1 class="name">Mostafa Mahmoud</h1>
+      <div class="role">Business Analyst / Product Owner</div>
+      <div class="meta">
+        <span>📍 6th of October, Giza, Egypt</span>
+        <span>🌍 Saudi market experience</span>
+        <span>💼 Open to roles in Egypt, the Gulf & remote</span>
+      </div>
+      <span class="badge">✈ Open to new opportunities</span>
+    </div>
+
+    <div class="card contact">
+      <div class="label">Contact</div>
+      <a href="mailto:mostafa200984@gmail.com">mostafa200984@gmail.com</a>
+      <a href="tel:+201158285899">+20 115 828 5899</a>
+      <a href="https://www.linkedin.com/in/mustafa-mohamed-638375229" target="_blank" rel="noopener">linkedin.com/in/mustafa-mohamed</a>
+    </div>
+
+    <div class="card">
+      <div class="label">Core Skills</div>
+      <div class="chips">
+        <span class="chip">Requirements Analysis</span>
+        <span class="chip">User Stories & AC</span>
+        <span class="chip">SRS / BRD</span>
+        <span class="chip">Backlog Management</span>
+        <span class="chip">Roadmapping</span>
+        <span class="chip">Prioritization</span>
+        <span class="chip">MVP Definition</span>
+        <span class="chip">UAT</span>
+        <span class="chip">Agile / Scrum / Kanban</span>
+        <span class="chip">Stakeholder Management</span>
+        <span class="chip">UML & User Flows</span>
+        <span class="chip">SQL</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="label">Tools</div>
+      <div class="chips">
+        <span class="chip">Jira</span><span class="chip">Confluence</span><span class="chip">Figma</span>
+        <span class="chip">Miro</span><span class="chip">Notion</span><span class="chip">Trello</span>
+        <span class="chip">draw.io</span><span class="chip">MS Visio</span><span class="chip">Postman</span>
+        <span class="chip">Excel</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="label">Languages</div>
+      <div class="lang"><span>Arabic</span><span>Native</span></div>
+      <div class="lang"><span>English</span><span>Fluent (C1)</span></div>
+    </div>
+  </aside>
+
+  <!-- ============ MAIN ============ -->
+  <main>
+    <div class="card hero">
+      <div class="eyebrow">Sr. Business Analyst · Product Owner</div>
+      <h1>I turn business goals into products teams can actually build.</h1>
+      <p>I'm a Business Analyst and Product Owner based in Cairo with <strong>4+ years</strong> in product and business analysis and <strong>7 years</strong> in tech overall — mostly building products for the <strong>Saudi market</strong> across marketplaces, e-commerce, communication platforms, HR and analytics. My strength is the space between the business and the dev team: clarifying the real problem, writing requirements that leave no room for guessing, and making sure what ships is what was needed.</p>
+      <div class="stats">
+        <div class="stat"><b>4+</b><span>Years in BA & Product</span></div>
+        <div class="stat"><b>6</b><span>Companies & product teams</span></div>
+        <div class="stat"><b>🇸🇦</b><span>Saudi-market products</span></div>
+      </div>
+    </div>
+
+    <div class="process">
+      <div class="step"><div class="n">01</div><h3>Discover</h3><p>Research the market, competitors and users to find the real problem.</p></div>
+      <div class="step"><div class="n">02</div><h3>Define</h3><p>Shape the solution with stakeholders and agree on scope.</p></div>
+      <div class="step"><div class="n">03</div><h3>Document</h3><p>User stories, clear ACs, flows and specs the team can trust.</p></div>
+      <div class="step"><div class="n">04</div><h3>Deliver</h3><p>Groom, plan sprints and unblock the team until it ships.</p></div>
+      <div class="step"><div class="n">05</div><h3>Validate</h3><p>Lead UAT and track impact after launch, then iterate.</p></div>
+    </div>
+
+    <section class="card">
+      <h2>Experience</h2>
+      <div class="timeline">
+        <div class="job">
+          <div class="job-head"><h3>Sr. Business Analyst · <span class="co">HelloApp (Al Othaim Holding)</span></h3><span class="when">Nov 2025 – Present</span></div>
+          <div class="where">On-demand home services marketplace, Saudi Arabia · New Cairo</div>
+          <p>Own features on the product roadmap from research and solution proposal through delivery. Write product tickets, align stakeholders on business and market needs, lead UAT before release, and monitor feature performance after launch.</p>
+        </div>
+        <div class="job">
+          <div class="job-head"><h3>Product Manager / Business Analyst · <span class="co">Makaseb</span></h3><span class="when">Aug 2024 – Nov 2025</span></div>
+          <div class="where">E-commerce & digital marketing solutions, Saudi Arabia · Sheikh Zayed</div>
+          <p>Defined product vision and roadmap, owned and prioritized the backlog, wrote user stories with clear acceptance criteria, and led sprint planning, grooming and retrospectives across UX/UI, dev, marketing and sales.</p>
+        </div>
+        <div class="job">
+          <div class="job-head"><h3>Business Analyst (Part-time) · <span class="co">HR Path</span></h3><span class="when">Aug 2024 – Nov 2025</span></div>
+          <div class="where">HR solutions (web & mobile), Saudi Arabia · Remote</div>
+          <p>Oversaw development of the HR application, wrote user stories and functional specifications, maintained process documentation and managed stakeholder expectations with remote teams.</p>
+        </div>
+        <div class="job">
+          <div class="job-head"><h3>Product Owner / System Analyst · <span class="co">Bevatel</span></h3><span class="when">Jun 2023 – Aug 2024</span></div>
+          <div class="where">Business communication & cloud call center solutions · Dokki</div>
+          <p>Produced SRS and BRD documentation with diagrams, wrote use cases and user stories, refined the backlog, and ran competitor gap analysis to propose solutions with UI/UX and dev teams.</p>
+        </div>
+        <div class="job">
+          <div class="job-head"><h3>Business Analyst · <span class="co">Ocoda (Bevatel)</span></h3><span class="when">Sep 2022 – Aug 2023</span></div>
+          <div class="where">Web, mobile & e-commerce digital solutions · Dokki</div>
+          <p>Gathered and documented requirements for web and mobile projects, built prototypes and functional specs, and liaised between clients, vendors and development teams.</p>
+        </div>
+        <div class="job">
+          <div class="job-head"><h3>Software & Marketing Consultant · <span class="co">Innovalz</span></h3><span class="when">Oct 2019 – Sep 2022</span></div>
+          <div class="where">Software solutions & marketing strategy · 6th of October</div>
+          <p>Where it started — advising clients on software and marketing solutions, building the technical and business foundation behind my analysis work today.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Key Products</h2>
+      <div class="grid">
+        <div class="card proj">
+          <h3>HelloApp — Home Services Marketplace</h3>
+          <div class="tags"><span class="tag">Marketplace</span><span class="tag">Roadmap</span><span class="tag">UAT</span></div>
+          <p>Feature ownership across the Customer App, Service Provider Portal and Admin Panel — from research and solution proposal to delivery.</p>
+          <p class="solves"><b>Solves:</b> connecting customers with trusted service providers in Saudi Arabia through one seamless booking experience.</p>
+        </div>
+        <div class="card proj">
+          <h3>Data Pulse — Makaseb</h3>
+          <div class="tags"><span class="tag">Analytics</span><span class="tag">KPIs</span><span class="tag">Dashboards</span></div>
+          <p>A web analytics tool in the spirit of Google Analytics. Owned the backlog, defined KPIs and delivered real-time dashboards and behavior tracking.</p>
+          <p class="solves"><b>Solves:</b> giving online merchants clear, real-time insight into how visitors behave on their stores.</p>
+        </div>
+        <div class="card proj">
+          <h3>Bevatel Call Center & Admin Dashboards</h3>
+          <div class="tags"><span class="tag">B2B SaaS</span><span class="tag">SRS / BRD</span><span class="tag">Release Planning</span></div>
+          <p>Cloud communication and call center tools. Managed the backlog, coordinated release cycles and worked closely with UI/UX on intuitive interfaces.</p>
+          <p class="solves"><b>Solves:</b> helping businesses run customer communication — chat, voice, video — from one manageable platform.</p>
+        </div>
+        <div class="card proj">
+          <h3>HR Platform — HR Path</h3>
+          <div class="tags"><span class="tag">HR Tech</span><span class="tag">Web & Mobile</span><span class="tag">Specs</span></div>
+          <p>HR web and mobile application for employee records and processes. Wrote user stories and functional specs, and followed delivery with remote teams.</p>
+          <p class="solves"><b>Solves:</b> replacing scattered, manual HR processes with one structured system.</p>
+        </div>
+        <div class="card proj">
+          <h3>E-commerce & Healthcare Platforms — Ocoda</h3>
+          <div class="tags"><span class="tag">E-commerce</span><span class="tag">Healthcare</span><span class="tag">User Flows</span></div>
+          <p>Analyzed and documented solutions across industries — user stories, flows and coordinated delivery for client products.</p>
+          <p class="solves"><b>Solves:</b> turning client ideas into clear, buildable requirements across very different domains.</p>
+        </div>
+        <div class="card proj">
+          <h3>"With You" — Assistive App for Blind Students</h3>
+          <div class="tags"><span class="tag">Accessibility</span><span class="tag">Mobile</span><span class="tag">Grad Project · A+</span></div>
+          <p>Graduation project: a mobile app designed to support blind students in their studies. Also built SRS + UML analyses for an Online Banking System and a CRM System.</p>
+          <p class="solves"><b>Solves:</b> making learning tools accessible to students who can't rely on visual interfaces.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Education & Certifications</h2>
+      <ul class="edu">
+        <li>🎓 <b>B.Sc. Information Technology & Computer Science</b> — Misr University for Science and Technology <span class="y">· 2022</span></li>
+        <li>🏛 <b>President of the Student Union</b> — Misr University for Science and Technology <span class="y">· 2020–2021</span></li>
+        <li>📜 <b>Product Management Fundamentals</b> — Coursera <span class="y">· 2026</span></li>
+        <li>📜 <b>Scrum Foundation Professional Certificate (SFPC)</b> — CertiProf <span class="y">· 2025</span></li>
+        <li>📜 <b>Lifelong Learning Certificate (LLL)</b> — CertiProf <span class="y">· 2025</span></li>
+        <li>📜 <b>Full Stack Web Development</b> — Route <span class="y">· 2018</span></li>
+      </ul>
+    </section>
+
+    <div class="card cta">
+      <h2>Let's build your next product together.</h2>
+      <p>Open to Business Analyst and Product Owner roles — in Egypt, the Gulf or remote.</p>
+      <a class="btn" href="mailto:mostafa200984@gmail.com">Get in touch →</a>
+    </div>
+
+    <footer>© 2026 Mostafa Mahmoud</footer>
+  </main>
+</div>
+</body>
+</html>
