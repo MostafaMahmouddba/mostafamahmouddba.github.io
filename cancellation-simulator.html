@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cancellation Policy Simulator | Mostafa Mahmoud</title>
-<meta name="description" content="Interactive prototype by Mostafa Mahmoud: simulate a marketplace cancellation and no-show policy (fictional rules).">
+<meta name="description" content="Interactive prototype by Mostafa Mahmoud: try a marketplace cancellation, refund and no-show policy (fictional rules).">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&family=Noto+Kufi+Arabic:wght@400;600&display=swap" rel="stylesheet">
 <style>
   :root{--bg:#f6f7fb;--card:#fff;--ink:#0f172a;--muted:#5b6475;--line:#e4e7ef;--accent:#2457d6;--accent-soft:#e8eefc;--accent-2:#0ea5a4;--chip:#f1f3f8;--good:#15803d;--good-soft:#dcfce7;--mid:#b45309;--mid-soft:#fef3c7;--bad:#b91c1c;--bad-soft:#fee2e2}
   @media (prefers-color-scheme:dark){:root{--bg:#0b1020;--card:#131a2e;--ink:#e7ebf5;--muted:#9aa4bb;--line:#222b44;--accent:#6d93ff;--accent-soft:#1b2747;--accent-2:#2dd4bf;--chip:#1a2238;--good:#4ade80;--good-soft:#12301f;--mid:#fbbf24;--mid-soft:#3a2e10;--bad:#f87171;--bad-soft:#3b1515}}
@@ -15,38 +15,58 @@
   body{font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;font-size:15px}
   a{color:var(--accent)}
   h1,h2,h3{font-family:"Space Grotesk",Inter,sans-serif;line-height:1.25}
-  .wrap{max-width:980px;margin:0 auto;padding:28px 16px 60px}
+  .wrap{max-width:1040px;margin:0 auto;padding:28px 16px 60px}
   .back{display:inline-block;margin-bottom:18px;font-size:14px;text-decoration:none}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px}
   .tag{display:inline-block;background:var(--mid-soft);color:var(--mid);font-size:12px;font-weight:600;padding:4px 10px;border-radius:999px;margin-bottom:10px}
   h1{font-size:clamp(24px,4vw,32px);margin-bottom:6px}
   .sub{color:var(--muted)}
-  .layout{display:grid;grid-template-columns:340px 1fr;gap:18px;margin-top:18px}
-  .label{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:600;margin:16px 0 8px}
+  .layout{display:grid;grid-template-columns:330px 1fr;gap:16px;margin-top:16px}
+  .label{font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:600;margin:16px 0 7px}
   .label:first-child{margin-top:0}
+  #timeWrap .label{margin-top:16px}
   .seg{display:flex;flex-wrap:wrap;gap:6px}
-  .seg button{flex:1;min-width:90px;border:1px solid var(--line);background:var(--chip);color:var(--ink);font:500 14px Inter,sans-serif;padding:9px 10px;border-radius:10px;cursor:pointer}
+  .seg button{flex:1;min-width:84px;border:1px solid var(--line);background:var(--chip);color:var(--ink);font:500 13.5px Inter,sans-serif;padding:8px 8px;border-radius:9px;cursor:pointer}
   .seg button.on{background:var(--accent);border-color:var(--accent);color:#fff}
-  input[type=range]{width:100%;accent-color:var(--accent)}
-  .hours{font:700 22px "Space Grotesk",sans-serif}
-  .results{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-  .res{border-radius:14px;padding:16px;background:var(--chip)}
-  .res .k{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:600}
-  .res .v{font:700 26px "Space Grotesk",sans-serif;margin-top:4px}
-  .res .d{font-size:13.5px;color:var(--muted);margin-top:2px}
+  .seg button:disabled{opacity:.4;cursor:not-allowed}
+  input[type=range]{width:100%;accent-color:var(--accent);margin-top:4px}
+  .hours{font:700 21px "Space Grotesk",sans-serif}
+  .tl{position:relative;height:30px;border-radius:8px;overflow:hidden;display:flex;margin-top:10px}
+  .tl div{display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#fff;white-space:nowrap}
+  .tl .z1{background:#16a34a}.tl .z2{background:#d97706}.tl .z3{background:#dc2626}.tl .z4{background:#64748b}
+  .tl .mk{position:absolute;top:-2px;width:3px;height:34px;background:var(--ink);border-radius:2px;transition:left .1s}
+  .tlx{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:3px}
+  .offer{display:none;margin-bottom:12px;border-radius:12px;padding:12px 14px;background:var(--accent-soft);color:var(--ink);font-size:14px}
+  .offer b{color:var(--accent)}
+  .results{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+  .res{border-radius:12px;padding:14px;background:var(--chip)}
+  .res .k{font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:600}
+  .res .v{font:700 25px "Space Grotesk",sans-serif;margin-top:3px}
+  .res .d{font-size:13px;color:var(--muted);margin-top:2px}
   .good{background:var(--good-soft)} .good .v{color:var(--good)}
   .mid{background:var(--mid-soft)} .mid .v{color:var(--mid)}
   .bad{background:var(--bad-soft)} .bad .v{color:var(--bad)}
-  .msg{margin-top:12px;border:1px dashed var(--line);border-radius:14px;padding:14px 16px}
-  .msg .k{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:600;margin-bottom:6px}
-  .rule{margin-top:12px;font-size:13.5px;color:var(--muted)}
+  .box{margin-top:10px;border:1px dashed var(--line);border-radius:12px;padding:12px 14px;font-size:14px}
+  .box .k{display:flex;justify-content:space-between;align-items:center;font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:600;margin-bottom:6px}
+  .lang{display:flex;gap:4px}
+  .lang button{border:1px solid var(--line);background:var(--chip);color:var(--ink);font:600 11.5px Inter;padding:2px 9px;border-radius:6px;cursor:pointer}
+  .lang button.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+  #notif.ar{font-family:"Noto Kufi Arabic",Inter,sans-serif;direction:rtl;text-align:right}
+  .who{display:grid;grid-template-columns:repeat(2,1fr);gap:6px 14px}
+  .who div{font-size:13.5px}
+  .who b{display:inline-block;min-width:74px}
+  .rule{margin-top:10px;font-size:13px;color:var(--muted)}
   .rule b{color:var(--ink)}
-  .policy{margin-top:18px}
-  .policy h2{font-size:18px;margin-bottom:10px}
-  .policy ul{padding-left:20px}
-  .policy li{margin:4px 0;font-size:14.5px}
-  @media (max-width:800px){.layout{grid-template-columns:1fr}}
-  @media (max-width:480px){.results{grid-template-columns:1fr}}
+  .below{display:grid;grid-template-columns:1.2fr 1fr;gap:16px;margin-top:16px}
+  .below h2{font-size:17px;margin-bottom:10px}
+  .below table{width:100%;border-collapse:collapse;font-size:13.5px}
+  .below td,.below th{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+  .below th{font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+  .below ul{padding-left:18px;font-size:14px}
+  .below li{margin:4px 0}
+  .foot{margin-top:14px;font-size:13px;color:var(--muted);text-align:center}
+  @media (max-width:860px){.layout,.below{grid-template-columns:1fr}}
+  @media (max-width:480px){.results,.who{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -55,7 +75,7 @@
   <div class="card">
     <span class="tag">Prototype · fictional rules, no company data</span>
     <h1>Cancellation Policy Simulator</h1>
-    <p class="sub">Pick who cancels, the booking status and how close it is to the appointment, and see what the customer gets back, whether the provider is penalized, and what happens next.</p>
+    <p class="sub">I use prototypes like this in policy discussions with Ops and Finance, so everyone can test a scenario before the rules turn into user stories. Change the inputs and see the outcome for each side.</p>
   </div>
 
   <div class="layout">
@@ -64,84 +84,146 @@
       <div class="seg" id="actor">
         <button data-v="customer" class="on">Customer</button>
         <button data-v="provider">Provider</button>
-        <button data-v="noshow">Provider no-show</button>
+        <button data-v="noshow">No-show</button>
       </div>
-      <div id="statusWrap">
-        <div class="label">Booking status</div>
-        <div class="seg" id="status">
-          <button data-v="pending">Pending</button>
-          <button data-v="accepted" class="on">Accepted</button>
-        </div>
+      <div class="label">Booking status</div>
+      <div class="seg" id="status">
+        <button data-v="pending">Pending</button>
+        <button data-v="accepted" class="on">Accepted</button>
       </div>
-      <div id="hoursWrap">
+      <div class="label">Payment</div>
+      <div class="seg" id="pay">
+        <button data-v="online" class="on">Online</button>
+        <button data-v="cash">Cash on service</button>
+      </div>
+      <div class="label">What is cancelled?</div>
+      <div class="seg" id="scope">
+        <button data-v="all" class="on">Whole booking</button>
+        <button data-v="one">1 of 3 services</button>
+      </div>
+      <div id="timeWrap">
         <div class="label">Time before appointment</div>
-        <div class="hours" id="hoursLabel">12 hours</div>
+        <div class="hours" id="hoursLabel"></div>
         <input type="range" id="hours" min="0" max="48" step="1" value="12" aria-label="Hours before appointment">
+        <div class="tl" id="tl"></div>
+        <div class="tlx"><span>48h before</span><span>24h</span><span>4h · 0%</span></div>
       </div>
     </div>
 
     <div class="card">
+      <div class="offer" id="offer"></div>
       <div class="results">
         <div class="res" id="r1"><div class="k">Customer refund</div><div class="v" id="refund"></div><div class="d" id="refundD"></div></div>
         <div class="res" id="r2"><div class="k">Provider penalty</div><div class="v" id="penalty"></div><div class="d" id="penaltyD"></div></div>
       </div>
-      <div class="msg"><div class="k">Next step</div><div id="next"></div></div>
-      <div class="msg"><div class="k">Customer notification (one message)</div><div id="notif"></div></div>
+      <div class="box"><div class="k">Next step</div><div id="next"></div></div>
+      <div class="box"><div class="k">Who is affected</div><div class="who" id="who"></div></div>
+      <div class="box"><div class="k"><span>Customer notification · one message</span><span class="lang"><button data-l="en" class="on">EN</button><button data-l="ar">AR</button></span></div><div id="notif"></div></div>
       <p class="rule" id="rule"></p>
     </div>
   </div>
 
-  <div class="card policy">
-    <h2>The policy behind it</h2>
-    <ul>
-      <li><b>Before the provider accepts:</b> the customer can cancel for free.</li>
-      <li><b>Customer cancels after acceptance:</b> 100% refund 24h+ before, 50% between 4h and 24h, 0% under 4h.</li>
-      <li><b>Provider cancels:</b> the customer always gets 100% back, and the provider gets a penalty.</li>
-      <li><b>Before refunding a provider-side cancellation,</b> Ops tries to reassign the booking to another provider.</li>
-      <li><b>Provider no-show:</b> 100% refund, a penalty, and the case goes to Operations for review.</li>
-      <li><b>Cancellation and refund go out as one notification,</b> sent after the refund is confirmed.</li>
-    </ul>
-    <p class="rule">Built with Claude Code as a quick prototype to align stakeholders on the rules before writing the stories. Thresholds here are illustrative.</p>
+  <div class="below">
+    <div class="card">
+      <h2>Why these rules</h2>
+      <table>
+        <tr><th>Rule</th><th>Reason</th></tr>
+        <tr><td>Free before acceptance</td><td>Nobody has reserved time yet, so there's nothing to compensate.</td></tr>
+        <tr><td>50% between 4h and 24h</td><td>The provider blocked the slot and may not fill it, but there's still a chance.</td></tr>
+        <tr><td>0% under 4h</td><td>The slot is lost. Without a cost, last-minute cancellations grow.</td></tr>
+        <tr><td>Reschedule offered first</td><td>Many customers cancel because the time no longer works, not because they don't need the service.</td></tr>
+        <tr><td>Provider cancels → full refund + penalty</td><td>The customer did nothing wrong. The penalty keeps providers from dropping bookings casually.</td></tr>
+        <tr><td>Refund per service, not per booking</td><td>Customers often drop one service and keep the rest.</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h2>What we'd watch after launch</h2>
+      <ul>
+        <li>Cancellation rate, split by customer vs provider</li>
+        <li>Share of cancel attempts that turn into a reschedule</li>
+        <li>Late (under 4h) cancellations per 1,000 bookings</li>
+        <li>No-show reports and how many Ops confirms</li>
+        <li>Refund-related support tickets</li>
+      </ul>
+      <h2 style="margin-top:16px">Open questions</h2>
+      <ul>
+        <li>Should repeat late cancellers get a stricter policy?</li>
+        <li>Wallet refund by default, or ask the customer?</li>
+      </ul>
+    </div>
   </div>
+  <p class="foot">Prototyped with Claude Code to align stakeholders before writing the stories. Thresholds are illustrative.</p>
 </div>
 
 <script>
-const state={actor:"customer",status:"accepted",hours:12};
-function seg(id,key){document.querySelectorAll('#'+id+' button').forEach(b=>b.onclick=()=>{state[key]=b.dataset.v;document.querySelectorAll('#'+id+' button').forEach(x=>x.classList.toggle('on',x===b));render();});}
-seg('actor','actor');seg('status','status');
-document.getElementById('hours').oninput=e=>{state.hours=+e.target.value;render();};
+const S={actor:"customer",status:"accepted",pay:"online",scope:"all",hours:12,lang:"en"};
+const $=id=>document.getElementById(id);
+function seg(id,key){document.querySelectorAll('#'+id+' button').forEach(b=>b.onclick=()=>{if(b.disabled)return;S[key]=b.dataset.v;document.querySelectorAll('#'+id+' button').forEach(x=>x.classList.toggle('on',x===b));render();});}
+seg('actor','actor');seg('status','status');seg('pay','pay');seg('scope','scope');
+document.querySelectorAll('.lang button').forEach(b=>b.onclick=()=>{S.lang=b.dataset.l;document.querySelectorAll('.lang button').forEach(x=>x.classList.toggle('on',x===b));render();});
+$('hours').oninput=e=>{S.hours=+e.target.value;render();};
 function tone(el,t){el.className='res '+t;}
+function timeline(){
+  const pct=h=>((48-h)/48*100)+'%';
+  if(S.actor==='provider') $('tl').innerHTML='<div class="z1" style="width:'+pct(2)+'">Reassignment possible</div><div class="z4" style="flex:1">Too late</div><span class="mk" id="mk"></span>';
+  else $('tl').innerHTML='<div class="z1" style="width:'+pct(24)+'">100%</div><div class="z2" style="width:'+(20/48*100)+'%">50%</div><div class="z3" style="flex:1" title="0% refund"></div><span class="mk" id="mk"></span>';
+  $('mk').style.left='calc('+((48-S.hours)/48*100)+'% - 1px)';
+}
 function render(){
-  const {actor,status,hours}=state;
-  document.getElementById('statusWrap').style.display=actor==='noshow'?'none':'';
-  document.getElementById('hoursWrap').style.display=actor==='noshow'?'none':'';
-  document.getElementById('hoursLabel').textContent=hours===0?'Less than 1 hour':hours+(hours===1?' hour':' hours');
-  let refund,refundD,pen,penD,next,notif,rule,rt,pt;
+  const {actor,status,pay,scope,hours,lang}=S;
+  const noshow=actor==='noshow';
+  $('timeWrap').style.display=noshow?'none':'';
+  document.querySelector('#status [data-v="pending"]').disabled=noshow;
+  if(noshow&&S.status==='pending'){S.status='accepted';document.querySelectorAll('#status button').forEach(x=>x.classList.toggle('on',x.dataset.v==='accepted'));}
+  $('hoursLabel').textContent=hours===0?'Under 1 hour':hours+(hours===1?' hour':' hours');
+  if(!noshow) timeline();
+  const one=scope==='one', what=one?'the cancelled service':'the booking';
+  const svcEN=one?'Your AC cleaning service was cancelled. Your other services stay as booked.':'Your booking was cancelled.';
+  const svcAR=one?'تم إلغاء خدمة تنظيف المكيف، وباقي الخدمات في حجزك كما هي.':'تم إلغاء حجزك.';
+  let pctN=100, penalty=false, next='', en='', ar='', rule='', offer='';
   if(actor==='customer'){
-    pen='None';penD='Customer-side cancellation';pt='good';
-    if(status==='pending'){refund='100%';refundD='Cancelled before the provider accepted';rt='good';rule='Rule: <b>pre-acceptance cancellation</b> is always free.';}
-    else if(hours>=24){refund='100%';refundD='Cancelled 24h or more before';rt='good';rule='Rule: <b>24h+ before</b> the appointment means a full refund.';}
-    else if(hours>=4){refund='50%';refundD='Cancelled between 4h and 24h before';rt='mid';rule='Rule: <b>4h–24h before</b> means a 50% refund, since the provider already reserved the slot.';}
-    else{refund='0%';refundD='Cancelled less than 4h before';rt='bad';rule='Rule: <b>under 4h</b> means no refund, since the provider can no longer fill the slot.';}
-    next='Booking is cancelled. Slot is released back to the provider.';
-    notif='Your booking was cancelled. '+(refund==='0%'?'No refund applies under the cancellation policy.':'A '+refund+' refund has been issued to your original payment method.');
+    if(S.status==='pending'){pctN=100;rule='Rule: <b>before the provider accepts</b>, cancelling is always free.';}
+    else if(hours>=24){pctN=100;rule='Rule: <b>24h or more</b> before the appointment means a full refund.';}
+    else if(hours>=4){pctN=50;rule='Rule: <b>4h to 24h</b> before means 50% back.';}
+    else{pctN=0;rule='Rule: <b>under 4h</b> means no refund.';}
+    if(S.status==='accepted'&&pctN<100) offer='<b>Before confirming:</b> the app offers to <b>reschedule</b> for free instead. Only if the customer declines does the cancellation go through.';
+    next=one?'Only that service is cancelled. The provider keeps the other two.':'Booking is cancelled and the slot goes back to the provider.';
   } else if(actor==='provider'){
-    refund='100%';refundD='Provider-side cancellations are always fully refunded';rt='good';
-    pen='Yes';penD='Applied to the provider’s account';pt='bad';
-    const canReassign=hours>=2;
-    next=canReassign?'Ops first tries to <b>reassign</b> the booking to another provider. Refund is issued only if no one is available.':'Too close to the appointment to reassign. Booking is cancelled and refunded.';
-    notif=canReassign?'If reassigned: “Your provider has changed. Same date and time, new provider: [name].” Otherwise: “Your booking was cancelled by the provider. A full refund has been issued.”':'Your booking was cancelled by the provider. A full refund has been issued.';
-    rule='Rule: the customer is never charged for a provider’s cancellation. Reassignment is tried when there’s at least <b>2h</b> left.';
+    penalty=true;
+    if(hours>=2){next='Ops tries to <b>reassign</b> to another free provider in the same area. Refund only happens if nobody is available.';en='Your provider has changed. Same date and time, your new provider is Ahmed.';ar='تم تغيير مقدّم الخدمة. نفس الموعد، ومقدّم الخدمة الجديد هو أحمد.';rule='Rule: the customer never pays for a provider cancellation. Reassignment is tried when <b>2h or more</b> are left.';}
+    else{next='Too close to the slot to reassign. Cancelled with a full refund.';rule='Rule: under 2 hours, the booking is cancelled and fully refunded.';}
   } else {
-    refund='100%';refundD='Provider did not show up';rt='good';
-    pen='Yes';penD='Plus a review by Operations';pt='bad';
-    next='Customer reports the no-show from the booking page. The report goes to <b>Operations</b> for review. Reporting is not a cancellation, so the booking status doesn’t change until Ops decides.';
-    notif='We’re sorry your provider didn’t arrive. A full refund has been issued.';
-    rule='Rule: one no-show report per service. The report option appears shortly after the appointment start time.';
+    penalty=true;
+    next='Customer taps "Provider didn’t show up?" on the booking page. The report goes to <b>Ops</b> for review. Reporting isn’t a cancellation, so the status stays until Ops decides.';
+    en='Sorry your provider didn’t arrive. Our team is looking into it, and '+(pay==='online'?'a full refund has been issued.':'you won’t be charged.');
+    ar='نعتذر عن عدم حضور مقدّم الخدمة. فريقنا يراجع الحالة، '+(pay==='online'?'وتم استرداد المبلغ كاملًا.':'ولن يتم خصم أي مبلغ.');
+    rule='Rule: one no-show report per service. The option appears 10 minutes after the start time.';
   }
-  document.getElementById('refund').textContent=refund;document.getElementById('refundD').textContent=refundD;tone(document.getElementById('r1'),rt);
-  document.getElementById('penalty').textContent=pen;document.getElementById('penaltyD').textContent=penD;tone(document.getElementById('r2'),pt);
-  document.getElementById('next').innerHTML=next;document.getElementById('notif').textContent=notif;document.getElementById('rule').innerHTML=rule;
+  // refund card
+  let refund, refundD, rt;
+  if(pay==='cash'){refund='None due';refundD='Nothing was charged yet';rt='good';}
+  else{refund=pctN+'%';refundD=(actor==='provider'&&hours>=2)?'only if nobody can take the booking':'of '+what+(pctN>0?' · to card or wallet':'');rt=pctN===100?'good':pctN===50?'mid':'bad';}
+  $('refund').textContent=refund;$('refundD').textContent=refundD;tone($('r1'),rt);
+  $('penalty').textContent=penalty?'Yes':'None';$('penaltyD').textContent=penalty?(noshow?'Plus an Ops review':'Counts against the provider record'):'Customer-side cancellation';tone($('r2'),penalty?'bad':'good');
+  // customer notifications (if not already set)
+  if(!en){
+    if(actor==='provider'){en='Sorry, your provider cancelled. '+(pay==='online'?'A full refund is on its way.':'You won’t be charged.');ar='نعتذر، قام مقدّم الخدمة بإلغاء الحجز. '+(pay==='online'?'سيتم استرداد المبلغ كاملًا.':'لن يتم خصم أي مبلغ.');}
+    else if(pay==='cash'){en=svcEN+' No payment was taken.';ar=svcAR+' لم يتم خصم أي مبلغ.';}
+    else if(pctN===0){en=svcEN+' Under our policy, cancellations less than 4 hours before the appointment aren’t refunded.';ar=svcAR+' وفقًا لسياسة الإلغاء، لا يُسترد المبلغ عند الإلغاء قبل أقل من 4 ساعات من الموعد.';}
+    else{en=svcEN+' '+pctN+'% of the amount will be refunded to your original payment method within 3 to 5 business days.';ar=svcAR+' سيتم استرداد '+pctN+'% من المبلغ إلى وسيلة الدفع الأصلية خلال 3 إلى 5 أيام عمل.';}
+  }
+  $('notif').textContent=lang==='ar'?ar:en;$('notif').className=lang==='ar'?'ar':'';
+  $('next').innerHTML=next;$('rule').innerHTML=rule;
+  $('offer').innerHTML=offer;$('offer').style.display=offer?'block':'none';
+  // who is affected
+  const refundHappens=pay==='online'&&pctN>0&&!(actor==='provider'&&hours>=2);
+  const who=[
+    ['Customer', actor==='provider'&&hours>=2?'Gets a new provider, same slot':(pay==='cash'?'Not charged':(pctN===0?'No refund':pctN+'% refund'))],
+    ['Provider', penalty?'Penalty on record':(one?'Keeps 2 of 3 services':'Slot released')],
+    ['Ops', noshow?'Reviews the report':(actor==='provider'&&hours>=2?'Reassigns the booking':'No action')],
+    ['Finance', refundHappens?'Credit note for the refund':'No entry']
+  ];
+  $('who').innerHTML=who.map(w=>'<div><b>'+w[0]+'</b>'+w[1]+'</div>').join('');
 }
 render();
 </script>

@@ -3,41 +3,66 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sample PRD — Provider Reassignment | Mostafa Mahmoud</title>
+<title>Sample PRD: Provider Reassignment | Mostafa Mahmoud</title>
 <meta name="description" content="Sample product requirements document by Mostafa Mahmoud: provider reassignment for a home-services marketplace (fictional feature).">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&family=Noto+Kufi+Arabic:wght@400;600&display=swap" rel="stylesheet">
 <style>
-  :root{--bg:#f6f7fb;--card:#fff;--ink:#0f172a;--muted:#5b6475;--line:#e4e7ef;--accent:#2457d6;--accent-soft:#e8eefc;--accent-2:#0ea5a4;--chip:#f1f3f8;--warn:#b45309;--warn-soft:#fef3c7}
-  @media (prefers-color-scheme:dark){:root{--bg:#0b1020;--card:#131a2e;--ink:#e7ebf5;--muted:#9aa4bb;--line:#222b44;--accent:#6d93ff;--accent-soft:#1b2747;--accent-2:#2dd4bf;--chip:#1a2238;--warn:#fbbf24;--warn-soft:#3a2e10}}
+  :root{--bg:#f6f7fb;--card:#fff;--ink:#0f172a;--muted:#5b6475;--line:#e4e7ef;--accent:#2457d6;--accent-soft:#e8eefc;--accent-2:#0ea5a4;--chip:#f1f3f8;--warn:#b45309;--warn-soft:#fef3c7;--bad:#b91c1c;--bad-soft:#fee2e2;--good:#15803d;--good-soft:#dcfce7}
+  @media (prefers-color-scheme:dark){:root{--bg:#0b1020;--card:#131a2e;--ink:#e7ebf5;--muted:#9aa4bb;--line:#222b44;--accent:#6d93ff;--accent-soft:#1b2747;--accent-2:#2dd4bf;--chip:#1a2238;--warn:#fbbf24;--warn-soft:#3a2e10;--bad:#f87171;--bad-soft:#3b1515;--good:#4ade80;--good-soft:#12301f}}
   *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.65;font-size:15.5px}
+  body{font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.65;font-size:15px}
   a{color:var(--accent)}
   h1,h2,h3{font-family:"Space Grotesk",Inter,sans-serif;line-height:1.25}
-  .wrap{max-width:860px;margin:0 auto;padding:28px 16px 60px}
+  .wrap{max-width:900px;margin:0 auto;padding:28px 16px 60px}
   .back{display:inline-block;margin-bottom:18px;font-size:14px;text-decoration:none}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:28px;margin-bottom:18px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:26px;margin-bottom:16px}
   .tag{display:inline-block;background:var(--warn-soft);color:var(--warn);font-size:12px;font-weight:600;padding:4px 10px;border-radius:999px;margin-bottom:12px}
-  h1{font-size:clamp(26px,4vw,34px);margin-bottom:8px}
+  h1{font-size:clamp(26px,4vw,34px);margin-bottom:6px}
   .sub{color:var(--muted)}
-  .meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
-  .meta span{background:var(--chip);border:1px solid var(--line);border-radius:999px;padding:4px 12px;font-size:13px}
-  h2{font-size:20px;margin-bottom:12px;color:var(--accent)}
-  h3{font-size:16px;margin:16px 0 6px}
+  .meta{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:18px}
+  .meta div{background:var(--chip);border-radius:10px;padding:10px 12px;font-size:13px}
+  .meta b{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:2px}
+  .toc{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px}
+  .toc a{font-size:12.5px;text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:3px 10px;color:var(--muted)}
+  .toc a:hover{color:var(--accent);border-color:var(--accent)}
+  h2{font-size:19px;margin-bottom:12px}
+  h2 .n{color:var(--accent);margin-right:6px}
+  h3{font-size:15.5px;margin:18px 0 6px}
   p+p{margin-top:8px}
   ul,ol{padding-left:22px}
   li{margin:4px 0}
-  table{width:100%;border-collapse:collapse;font-size:14.5px;margin-top:6px}
+  .note{font-size:13px;color:var(--muted);margin-top:10px}
+  .tbl{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;font-size:14px;margin-top:4px}
   th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
-  th{color:var(--muted);font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:.04em}
-  .gwt{background:var(--chip);border-left:3px solid var(--accent-2);border-radius:8px;padding:10px 14px;margin:8px 0;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13.5px;white-space:pre-wrap;overflow-x:auto}
-  .story{font-style:italic;color:var(--muted);margin-bottom:6px}
-  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-  .kpi{background:var(--chip);border-radius:12px;padding:14px}
-  .kpi b{display:block;font-family:"Space Grotesk";font-size:15px;margin-bottom:4px}
-  .kpi span{font-size:13.5px;color:var(--muted)}
-  @media (max-width:640px){.grid{grid-template-columns:1fr}.card{padding:20px}}
+  th{color:var(--muted);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.05em;white-space:nowrap}
+  td.ar{font-family:"Noto Kufi Arabic",Inter,sans-serif;direction:rtl;text-align:right;font-size:13.5px}
+  .pill{display:inline-block;font-size:11.5px;font-weight:600;padding:2px 8px;border-radius:6px;background:var(--accent-soft);color:var(--accent);white-space:nowrap}
+  .pill.g{background:var(--good-soft);color:var(--good)} .pill.r{background:var(--bad-soft);color:var(--bad)}
+  .gwt{background:var(--chip);border-left:3px solid var(--accent-2);border-radius:8px;padding:10px 14px;margin:8px 0;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px;white-space:pre-wrap;overflow-x:auto}
+  .gwt .id{color:var(--accent-2);font-weight:700}
+  .story{color:var(--muted);margin-bottom:6px}
+  .flow{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+  .flow .s{background:var(--chip);border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:13.5px}
+  .flow .s b{color:var(--accent);margin-right:4px}
+  .flow .arr{color:var(--muted)}
+  .mock{margin-top:16px;border:1px solid var(--line);border-radius:14px;overflow:hidden;max-width:520px}
+  .mock .bar{background:var(--chip);padding:10px 14px;font-weight:600;font-size:14px;display:flex;justify-content:space-between}
+  .mock .body{padding:14px}
+  .mock label{display:block;font-size:12px;color:var(--muted);margin:10px 0 4px}
+  .mock .opt{display:flex;justify-content:space-between;align-items:center;border:1px solid var(--line);border-radius:8px;padding:8px 10px;margin-bottom:6px;font-size:13.5px}
+  .mock .opt.sel{border-color:var(--accent);background:var(--accent-soft)}
+  .mock .sel-box{border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:13.5px;color:var(--muted)}
+  .mock .btns{display:flex;justify-content:flex-end;gap:8px;margin-top:14px}
+  .mock .b{padding:7px 14px;border-radius:8px;font-size:13px;font-weight:600;border:1px solid var(--line)}
+  .mock .b.p{background:var(--accent);color:#fff;border-color:var(--accent)}
+  ol.br{list-style:none;padding-left:0}
+  ol.br li b:first-child{display:inline-block;min-width:52px;color:var(--accent)}
+  .log{font-size:13.5px}
+  .log td:first-child{white-space:nowrap;font-weight:600}
+  @media (max-width:700px){.meta{grid-template-columns:repeat(2,1fr)}.card{padding:20px}}
 </style>
 </head>
 <body>
@@ -47,104 +72,201 @@
   <div class="card">
     <span class="tag">Sample work · fictional feature, no company data</span>
     <h1>PRD: Provider Reassignment</h1>
-    <p class="sub">Moving a booking to a new service provider instead of cancelling it, in a home-services marketplace.</p>
-    <div class="meta"><span>Author: Mostafa Mahmoud</span><span>Platforms: Customer App · Provider Portal · Ops Admin</span><span>Status: Ready for grooming</span></div>
-  </div>
-
-  <div class="card">
-    <h2>1. Problem</h2>
-    <p>When an assigned provider can't make it, the only option today is to cancel. The customer loses the booking, has to rebook from scratch, and the marketplace loses the order. Operations has no way to step in and save it.</p>
-    <h3>Evidence</h3>
-    <ul>
-      <li>A meaningful share of cancellations are provider-side and happen after the booking was accepted.</li>
-      <li>Customers who face a provider-side cancellation are less likely to book again.</li>
-      <li>Ops agents already try to find a replacement manually, by phone, with no record in the system.</li>
-    </ul>
-  </div>
-
-  <div class="card">
-    <h2>2. Goal &amp; success metrics</h2>
-    <p>Keep the booking alive by letting Operations move it to another qualified provider, with the customer informed and nothing lost along the way.</p>
-    <div class="grid" style="margin-top:14px">
-      <div class="kpi"><b>Primary</b><span>Share of at-risk bookings saved through reassignment instead of cancellation</span></div>
-      <div class="kpi"><b>Secondary</b><span>Overall cancellation rate, and repeat-booking rate of affected customers</span></div>
-      <div class="kpi"><b>Guardrail</b><span>No rise in complaints or in time-to-service for reassigned bookings</span></div>
+    <p class="sub">Let Operations move a booking to another provider when the assigned one drops out, instead of cancelling it.</p>
+    <div class="meta">
+      <div><b>Owner</b>Mostafa Mahmoud</div>
+      <div><b>Version</b>1.2 · Ready for grooming</div>
+      <div><b>Platforms</b>Ops Admin, Provider Portal, Customer App</div>
+      <div><b>Reviewed with</b>Ops lead, Eng lead, Design, Finance</div>
+    </div>
+    <div class="toc">
+      <a href="#problem">Problem</a><a href="#metrics">Metrics</a><a href="#scope">Scope</a><a href="#flow">Flow</a><a href="#rules">Rules</a><a href="#stories">Stories</a><a href="#notif">Notifications</a><a href="#edge">Edge cases</a><a href="#trace">Traceability</a><a href="#decisions">Decisions</a><a href="#rollout">Rollout</a>
     </div>
   </div>
 
-  <div class="card">
-    <h2>3. Scope</h2>
-    <table>
-      <tr><th>In scope</th><th>Out of scope</th></tr>
-      <tr><td>Ops Admin reassigns a booking to another provider</td><td>Customer choosing a new provider themselves</td></tr>
-      <tr><td>Effects on the old and the new provider's portal</td><td>Automatic matching of the replacement</td></tr>
-      <tr><td>Customer notification and updated booking details</td><td>Changes to pricing or commission</td></tr>
-      <tr><td>Audit log of every reassignment</td><td>Reassigning completed or in-progress bookings</td></tr>
-    </table>
+  <div class="card" id="problem">
+    <h2><span class="n">1</span>Problem</h2>
+    <p>When a provider drops a booking they already accepted, the only action available is to cancel and refund. The customer has to start over, and the order is lost even when another provider in the same area is free at that time.</p>
+    <ul>
+      <li>~3.5% of all bookings are cancelled by the provider after acceptance.</li>
+      <li>About 6 in 10 of those happen more than 2 hours before the slot, so a replacement was realistic.</li>
+      <li>Customers who go through a provider-side cancellation rebook about 30% less over the next 60 days.</li>
+      <li>Ops agents already call other providers to save these bookings, but there's no way to record it in the system.</li>
+    </ul>
+    <p class="note">Figures are illustrative for this sample.</p>
   </div>
 
-  <div class="card">
-    <h2>4. Business rules</h2>
-    <ol>
-      <li>Reassignment is available only for bookings that are <b>pending</b> or <b>accepted</b>.</li>
-      <li>A booking can be reassigned <b>once per service</b>.</li>
-      <li>The new provider must offer the same service in the same area.</li>
-      <li>The booking is <b>auto-accepted</b> for the new provider; no extra confirmation step.</li>
-      <li>Price, date and time stay the same; commission is unchanged.</li>
-      <li>The old provider loses access to the booking immediately.</li>
-      <li>The customer receives one notification with the new provider's details.</li>
-      <li>Every reassignment is written to an <b>audit log</b>: who, when, from which provider to which, and why.</li>
+  <div class="card" id="metrics">
+    <h2><span class="n">2</span>Goal &amp; success metrics</h2>
+    <p>Save bookings that would otherwise be cancelled, without the customer doing anything and without hurting service quality.</p>
+    <div class="tbl"><table>
+      <tr><th>Metric</th><th>Type</th><th>Baseline</th><th>Target (90 days)</th></tr>
+      <tr><td>Eligible provider-side cancellations saved by reassignment</td><td><span class="pill">Primary</span></td><td>0%</td><td>40%</td></tr>
+      <tr><td>Provider-side cancellation rate (of all bookings)</td><td><span class="pill">Secondary</span></td><td>3.5%</td><td>≤ 2%</td></tr>
+      <tr><td>60-day rebooking rate of affected customers</td><td><span class="pill">Secondary</span></td><td>Current</td><td>+15%</td></tr>
+      <tr><td>Complaints per 1,000 reassigned bookings</td><td><span class="pill r">Guardrail</span></td><td>Same as normal bookings</td><td>No increase</td></tr>
+    </table></div>
+  </div>
+
+  <div class="card" id="scope">
+    <h2><span class="n">3</span>Scope</h2>
+    <div class="tbl"><table>
+      <tr><th>In (phase 1)</th><th>Out (later or never)</th></tr>
+      <tr><td>Ops Admin reassigns a booking or a single service in it</td><td>Customer picks a new provider by themselves</td></tr>
+      <tr><td>List of eligible providers (same service, area, free at the slot)</td><td>Automatic matching without an agent</td></tr>
+      <tr><td>Updates in both providers' portals</td><td>Any change to price, slot or commission</td></tr>
+      <tr><td>One combined customer notification</td><td>Reassigning in-progress or completed services</td></tr>
+      <tr><td>Audit log and tracking events</td><td>Provider rating impact (separate ticket)</td></tr>
+    </table></div>
+  </div>
+
+  <div class="card" id="flow">
+    <h2><span class="n">4</span>Ops flow</h2>
+    <div class="flow">
+      <div class="s"><b>1</b>Open booking</div><span class="arr">→</span>
+      <div class="s"><b>2</b>Click "Reassign"</div><span class="arr">→</span>
+      <div class="s"><b>3</b>Pick service (if more than one)</div><span class="arr">→</span>
+      <div class="s"><b>4</b>Choose provider + reason</div><span class="arr">→</span>
+      <div class="s"><b>5</b>Confirm</div><span class="arr">→</span>
+      <div class="s"><b>6</b>Notify + log</div>
+    </div>
+    <div class="mock" aria-label="Wireframe of the reassign dialog">
+      <div class="bar"><span>Reassign service · Deep cleaning</span><span style="color:var(--muted)">✕</span></div>
+      <div class="body">
+        <label>Eligible providers (same area, free at Thu 10:00)</label>
+        <div class="opt sel"><span>Provider B · 4.8 ★</span><span class="pill g">Available</span></div>
+        <div class="opt"><span>Provider C · 4.6 ★</span><span class="pill g">Available</span></div>
+        <label>Reason</label>
+        <div class="sel-box">Provider unavailable (sick / emergency) ▾</div>
+        <div class="btns"><span class="b">Cancel</span><span class="b p">Reassign</span></div>
+      </div>
+    </div>
+    <p class="note">Low-fidelity wireframe. Final UI follows the design file.</p>
+  </div>
+
+  <div class="card" id="rules">
+    <h2><span class="n">5</span>Business rules</h2>
+    <ol class="br">
+      <li><b>BR-1</b> Reassignment is allowed for services that are <b>Pending</b> or <b>Accepted</b> only.</li>
+      <li><b>BR-2</b> Each service can be reassigned <b>once</b>. A second drop goes to the normal cancellation flow.</li>
+      <li><b>BR-3</b> In a multi-service booking, reassignment is per service. Other services stay with their providers.</li>
+      <li><b>BR-4</b> Eligible providers offer the same service, cover the customer's area and are free at the same slot.</li>
+      <li><b>BR-5</b> Reassignment must happen at least <b>2 hours</b> before the slot. Under 2 hours, the action is hidden.</li>
+      <li><b>BR-6</b> The new provider gets the service as <b>Accepted</b> with no extra confirmation step.</li>
+      <li><b>BR-7</b> Price, date, time and commission don't change. Payment is not touched.</li>
+      <li><b>BR-8</b> The original provider loses access right away, and the drop still counts as a provider-side cancellation for penalty purposes.</li>
+      <li><b>BR-9</b> A reason is mandatory and comes from a fixed list.</li>
+      <li><b>BR-10</b> Every reassignment writes an audit entry: agent, time, service, from-provider, to-provider, reason.</li>
     </ol>
   </div>
 
-  <div class="card">
-    <h2>5. User stories &amp; acceptance criteria</h2>
+  <div class="card" id="stories">
+    <h2><span class="n">6</span>User stories &amp; acceptance criteria</h2>
 
-    <h3>US-01 · Ops Admin reassigns a booking</h3>
-    <p class="story">As an Operations agent, I want to move a booking to another provider, so the customer still gets served instead of the booking being cancelled.</p>
-    <div class="gwt">Given a booking with status "Accepted"
-And it has not been reassigned before
-When the agent selects "Reassign" and picks an eligible provider
-Then the booking moves to the new provider as "Accepted"
-And an audit log entry is created</div>
-    <div class="gwt">Given a booking that was already reassigned once
-When the agent opens its actions
-Then the "Reassign" option is not available</div>
+    <h3>US-01 · Ops reassigns a service</h3>
+    <p class="story">As an Ops agent, I want to move a service to another provider, so the customer is still served.</p>
+    <div class="gwt"><span class="id">AC-01.1</span>
+Given an Accepted service, never reassigned, more than 2 hours before its slot
+When the agent picks an eligible provider and a reason and confirms
+Then the service moves to the new provider as Accepted
+And an audit entry is created</div>
+    <div class="gwt"><span class="id">AC-01.2</span>
+Given a service that was already reassigned once
+When the agent opens the booking
+Then the "Reassign" action is not shown for that service</div>
+    <div class="gwt"><span class="id">AC-01.3</span>
+Given no provider meets the eligibility rules
+When the agent opens "Reassign"
+Then an empty state explains why
+And the agent can go to the normal cancellation flow</div>
 
-    <h3>US-02 · Provider portal reflects the change</h3>
-    <p class="story">As a provider, I want to see bookings that are moved to or away from me, so my schedule is always accurate.</p>
-    <div class="gwt">Given a booking was reassigned from Provider A to Provider B
+    <h3>US-02 · Providers see the change</h3>
+    <p class="story">As a provider, I want my schedule to reflect bookings moved to or away from me.</p>
+    <div class="gwt"><span class="id">AC-02.1</span>
+Given a service moved from Provider A to Provider B
 When Provider A opens their bookings
-Then the booking no longer appears in their active list
-And Provider B sees it as "Accepted" with the original date and time</div>
+Then the service is no longer in their active list
+And Provider B sees it as Accepted with the original slot and price</div>
 
     <h3>US-03 · Customer is informed</h3>
-    <p class="story">As a customer, I want to know if my provider changed, so I'm not surprised on the day of the service.</p>
-    <div class="gwt">Given my booking was reassigned
-When the reassignment is saved
-Then I receive one notification with the new provider's name
+    <p class="story">As a customer, I want to know if my provider changed, so I'm not surprised on the day.</p>
+    <div class="gwt"><span class="id">AC-03.1</span>
+Given my service was reassigned
+When the change is saved
+Then I get one notification with the new provider's name
 And the booking details show the new provider</div>
   </div>
 
-  <div class="card">
-    <h2>6. Rollout &amp; measurement</h2>
-    <ol>
-      <li>Release to the Operations team first, with release notes and a short walkthrough.</li>
-      <li>Track the success metrics weekly against the four weeks before launch.</li>
-      <li>Review the audit log for misuse, such as repeated reassignments from the same provider.</li>
-      <li>Decide on phase 2 (customer-initiated reassignment) based on the results.</li>
-    </ol>
+  <div class="card" id="notif">
+    <h2><span class="n">7</span>Notifications</h2>
+    <div class="tbl"><table>
+      <tr><th>To</th><th>Channel</th><th>English</th><th>Arabic</th></tr>
+      <tr><td>Customer</td><td>Push + in-app</td><td>Your provider has changed. Same date and time, your new provider is {name}.</td><td class="ar">تم تغيير مقدّم الخدمة. نفس الموعد، ومقدّم الخدمة الجديد هو {name}.</td></tr>
+      <tr><td>Provider B</td><td>Push</td><td>New booking assigned to you: {service}, {date} {time}.</td><td class="ar">تم إسناد حجز جديد لك: {service}، {date} {time}.</td></tr>
+      <tr><td>Provider A</td><td>In-app</td><td>{service} on {date} was moved to another provider.</td><td class="ar">تم نقل خدمة {service} بتاريخ {date} إلى مقدّم خدمة آخر.</td></tr>
+    </table></div>
   </div>
 
-  <div class="card">
-    <h2>7. Open questions</h2>
+  <div class="card" id="edge">
+    <h2><span class="n">8</span>Edge cases</h2>
+    <div class="tbl"><table>
+      <tr><th>Case</th><th>Expected behavior</th></tr>
+      <tr><td>Provider B becomes unavailable after reassignment</td><td>Normal provider cancellation flow (BR-2), full refund to customer.</td></tr>
+      <tr><td>Two agents reassign the same service at once</td><td>First save wins; second agent sees "Already reassigned".</td></tr>
+      <tr><td>Customer cancels while the agent is reassigning</td><td>Customer action wins; reassign fails with a clear message.</td></tr>
+      <tr><td>Booking has 3 services, only one dropped</td><td>Only that service moves (BR-3); one notification mentions that service only.</td></tr>
+      <tr><td>Slot is in under 2 hours</td><td>Action hidden (BR-5); agent uses cancellation flow.</td></tr>
+    </table></div>
+  </div>
+
+  <div class="card" id="trace">
+    <h2><span class="n">9</span>Traceability &amp; tracking</h2>
+    <div class="tbl"><table>
+      <tr><th>Metric</th><th>Rules</th><th>Stories / AC</th><th>Event</th></tr>
+      <tr><td>Saved cancellations</td><td>BR-1, BR-4, BR-5</td><td>AC-01.1, AC-01.3</td><td><code>service_reassigned</code>, <code>reassign_no_provider</code></td></tr>
+      <tr><td>Provider-side cancellation rate</td><td>BR-2, BR-8</td><td>AC-01.2</td><td><code>service_cancelled</code> (actor = provider)</td></tr>
+      <tr><td>Rebooking rate</td><td>BR-6, BR-7</td><td>AC-02.1, AC-03.1</td><td><code>booking_created</code> (60-day window)</td></tr>
+      <tr><td>Complaints (guardrail)</td><td>BR-9, BR-10</td><td>AC-01.1</td><td><code>ticket_created</code> (tag = reassigned)</td></tr>
+    </table></div>
+  </div>
+
+  <div class="card" id="decisions">
+    <h2><span class="n">10</span>Decisions &amp; risks</h2>
+    <div class="tbl"><table class="log">
+      <tr><th>Decision</th><th>Why</th></tr>
+      <tr><td>Auto-accept for Provider B</td><td>Ops already confirms by phone. An extra step adds delay and a second chance to drop.</td></tr>
+      <tr><td>Once per service</td><td>Avoids bookings bouncing between providers. Ops agreed after reviewing last quarter's cases.</td></tr>
+      <tr><td>Ops-only in phase 1</td><td>Keeps quality under control while we learn. Customer self-service is phase 2 if the primary metric holds.</td></tr>
+      <tr><td>Penalty still applies to Provider A</td><td>Without it, providers could drop bookings knowing Ops will cover them.</td></tr>
+    </table></div>
+    <h3>Risks</h3>
     <ul>
-      <li>Should providers who are reassigned away from repeatedly be flagged automatically?</li>
-      <li>Do we need a reason list for reassignment, or is free text enough for the audit log?</li>
+      <li>More load on Ops during peak hours. <i>Mitigation:</i> track reassignments per agent per day in week 1.</li>
+      <li>Reassigned customers rate lower. <i>Mitigation:</i> guardrail metric, review after 30 days.</li>
     </ul>
   </div>
 
-  <p class="sub" style="text-align:center;font-size:13px">This is a sample written to show how I structure a PRD. The feature, rules and metrics are generic and do not describe any company's product.</p>
+  <div class="card" id="rollout">
+    <h2><span class="n">11</span>Rollout &amp; open questions</h2>
+    <ol>
+      <li>Release to Ops in one city first, with release notes and a 15-minute walkthrough.</li>
+      <li>Compare metrics weekly against the 4 weeks before launch.</li>
+      <li>Go to all cities if the primary metric is above 25% after 4 weeks and the guardrail holds.</li>
+    </ol>
+    <h3>Open questions</h3>
+    <ul>
+      <li>Should providers who are reassigned away from often get flagged automatically?</li>
+      <li>Do we show the customer the reason, or just the new provider?</li>
+    </ul>
+    <h3>Changelog</h3>
+    <ul class="note" style="margin-top:0">
+      <li>v1.2: added Arabic copy and multi-service handling after Ops review.</li>
+      <li>v1.1: added the 2-hour rule and edge cases after engineering review.</li>
+      <li>v1.0: first draft.</li>
+    </ul>
+  </div>
+
+  <p class="sub" style="text-align:center;font-size:13px">A sample of how I write PRDs. The feature, numbers and rules are fictional and don't describe any company's product.</p>
 </div>
 <script data-goatcounter="https://mostafamahmoud.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
