@@ -87,6 +87,9 @@
   .proj p{font-size:14px;color:var(--muted)}
   .solves{margin-top:10px;font-size:14px;color:var(--ink)!important}
   .solves b{color:var(--accent-2)}
+  a.sample{text-decoration:none;color:inherit;transition:transform .15s,border-color .15s}
+  a.sample:hover{transform:translateY(-2px);border-color:var(--accent);text-decoration:none}
+  a.sample h3{color:var(--ink)}
 
   .edu li{list-style:none;padding:8px 0;border-bottom:1px dashed var(--line);font-size:14.5px}
   .edu li:last-child{border-bottom:0}
@@ -289,6 +292,24 @@
           <p>Graduation project: a mobile app designed to support blind students in their studies. Also built SRS + UML analyses for an Online Banking System and a CRM System.</p>
           <p class="solves"><b>Solves:</b> making learning tools accessible to students who can't rely on visual interfaces.</p>
         </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Work Samples</h2>
+      <div class="grid">
+        <a class="card proj sample" href="sample-prd.html">
+          <h3>Sample PRD: Provider Reassignment</h3>
+          <div class="tags"><span class="tag">PRD</span><span class="tag">User Stories</span><span class="tag">Success Metrics</span></div>
+          <p>How I structure a PRD: problem, goal and metrics, scope, business rules, user stories with Given/When/Then criteria, and rollout plan.</p>
+          <p class="solves"><b>Open →</b> fictional feature, no company data</p>
+        </a>
+        <a class="card proj sample" href="cancellation-simulator.html">
+          <h3>Prototype: Cancellation Policy Simulator</h3>
+          <div class="tags"><span class="tag">Interactive</span><span class="tag">Claude Code</span><span class="tag">Policy Design</span></div>
+          <p>An interactive prototype I use to align stakeholders on cancellation, refund and no-show rules before writing the stories.</p>
+          <p class="solves"><b>Try it →</b> illustrative rules</p>
+        </a>
       </div>
     </section>
 

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cancellation Policy Simulator | Mostafa Mahmoud</title>
+<meta name="description" content="Interactive prototype by Mostafa Mahmoud: simulate a marketplace cancellation and no-show policy (fictional rules).">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#f6f7fb;--card:#fff;--ink:#0f172a;--muted:#5b6475;--line:#e4e7ef;--accent:#2457d6;--accent-soft:#e8eefc;--accent-2:#0ea5a4;--chip:#f1f3f8;--good:#15803d;--good-soft:#dcfce7;--mid:#b45309;--mid-soft:#fef3c7;--bad:#b91c1c;--bad-soft:#fee2e2}
+  @media (prefers-color-scheme:dark){:root{--bg:#0b1020;--card:#131a2e;--ink:#e7ebf5;--muted:#9aa4bb;--line:#222b44;--accent:#6d93ff;--accent-soft:#1b2747;--accent-2:#2dd4bf;--chip:#1a2238;--good:#4ade80;--good-soft:#12301f;--mid:#fbbf24;--mid-soft:#3a2e10;--bad:#f87171;--bad-soft:#3b1515}}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;font-size:15px}
+  a{color:var(--accent)}
+  h1,h2,h3{font-family:"Space Grotesk",Inter,sans-serif;line-height:1.25}
+  .wrap{max-width:980px;margin:0 auto;padding:28px 16px 60px}
+  .back{display:inline-block;margin-bottom:18px;font-size:14px;text-decoration:none}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px}
+  .tag{display:inline-block;background:var(--mid-soft);color:var(--mid);font-size:12px;font-weight:600;padding:4px 10px;border-radius:999px;margin-bottom:10px}
+  h1{font-size:clamp(24px,4vw,32px);margin-bottom:6px}
+  .sub{color:var(--muted)}
+  .layout{display:grid;grid-template-columns:340px 1fr;gap:18px;margin-top:18px}
+  .label{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:600;margin:16px 0 8px}
+  .label:first-child{margin-top:0}
+  .seg{display:flex;flex-wrap:wrap;gap:6px}
+  .seg button{flex:1;min-width:90px;border:1px solid var(--line);background:var(--chip);color:var(--ink);font:500 14px Inter,sans-serif;padding:9px 10px;border-radius:10px;cursor:pointer}
+  .seg button.on{background:var(--accent);border-color:var(--accent);color:#fff}
+  input[type=range]{width:100%;accent-color:var(--accent)}
+  .hours{font:700 22px "Space Grotesk",sans-serif}
+  .results{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+  .res{border-radius:14px;padding:16px;background:var(--chip)}
+  .res .k{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:600}
+  .res .v{font:700 26px "Space Grotesk",sans-serif;margin-top:4px}
+  .res .d{font-size:13.5px;color:var(--muted);margin-top:2px}
+  .good{background:var(--good-soft)} .good .v{color:var(--good)}
+  .mid{background:var(--mid-soft)} .mid .v{color:var(--mid)}
+  .bad{background:var(--bad-soft)} .bad .v{color:var(--bad)}
+  .msg{margin-top:12px;border:1px dashed var(--line);border-radius:14px;padding:14px 16px}
+  .msg .k{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:600;margin-bottom:6px}
+  .rule{margin-top:12px;font-size:13.5px;color:var(--muted)}
+  .rule b{color:var(--ink)}
+  .policy{margin-top:18px}
+  .policy h2{font-size:18px;margin-bottom:10px}
+  .policy ul{padding-left:20px}
+  .policy li{margin:4px 0;font-size:14.5px}
+  @media (max-width:800px){.layout{grid-template-columns:1fr}}
+  @media (max-width:480px){.results{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="index.html">← Back to portfolio</a>
+  <div class="card">
+    <span class="tag">Prototype · fictional rules, no company data</span>
+    <h1>Cancellation Policy Simulator</h1>
+    <p class="sub">Pick who cancels, the booking status and how close it is to the appointment, and see what the customer gets back, whether the provider is penalized, and what happens next.</p>
+  </div>
+
+  <div class="layout">
+    <div class="card">
+      <div class="label">Who cancels?</div>
+      <div class="seg" id="actor">
+        <button data-v="customer" class="on">Customer</button>
+        <button data-v="provider">Provider</button>
+        <button data-v="noshow">Provider no-show</button>
+      </div>
+      <div id="statusWrap">
+        <div class="label">Booking status</div>
+        <div class="seg" id="status">
+          <button data-v="pending">Pending</button>
+          <button data-v="accepted" class="on">Accepted</button>
+        </div>
+      </div>
+      <div id="hoursWrap">
+        <div class="label">Time before appointment</div>
+        <div class="hours" id="hoursLabel">12 hours</div>
+        <input type="range" id="hours" min="0" max="48" step="1" value="12" aria-label="Hours before appointment">
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="results">
+        <div class="res" id="r1"><div class="k">Customer refund</div><div class="v" id="refund"></div><div class="d" id="refundD"></div></div>
+        <div class="res" id="r2"><div class="k">Provider penalty</div><div class="v" id="penalty"></div><div class="d" id="penaltyD"></div></div>
+      </div>
+      <div class="msg"><div class="k">Next step</div><div id="next"></div></div>
+      <div class="msg"><div class="k">Customer notification (one message)</div><div id="notif"></div></div>
+      <p class="rule" id="rule"></p>
+    </div>
+  </div>
+
+  <div class="card policy">
+    <h2>The policy behind it</h2>
+    <ul>
+      <li><b>Before the provider accepts:</b> the customer can cancel for free.</li>
+      <li><b>Customer cancels after acceptance:</b> 100% refund 24h+ before, 50% between 4h and 24h, 0% under 4h.</li>
+      <li><b>Provider cancels:</b> the customer always gets 100% back, and the provider gets a penalty.</li>
+      <li><b>Before refunding a provider-side cancellation,</b> Ops tries to reassign the booking to another provider.</li>
+      <li><b>Provider no-show:</b> 100% refund, a penalty, and the case goes to Operations for review.</li>
+      <li><b>Cancellation and refund go out as one notification,</b> sent after the refund is confirmed.</li>
+    </ul>
+    <p class="rule">Built with Claude Code as a quick prototype to align stakeholders on the rules before writing the stories. Thresholds here are illustrative.</p>
+  </div>
+</div>
+
+<script>
+const state={actor:"customer",status:"accepted",hours:12};
+function seg(id,key){document.querySelectorAll('#'+id+' button').forEach(b=>b.onclick=()=>{state[key]=b.dataset.v;document.querySelectorAll('#'+id+' button').forEach(x=>x.classList.toggle('on',x===b));render();});}
+seg('actor','actor');seg('status','status');
+document.getElementById('hours').oninput=e=>{state.hours=+e.target.value;render();};
+function tone(el,t){el.className='res '+t;}
+function render(){
+  const {actor,status,hours}=state;
+  document.getElementById('statusWrap').style.display=actor==='noshow'?'none':'';
+  document.getElementById('hoursWrap').style.display=actor==='noshow'?'none':'';
+  document.getElementById('hoursLabel').textContent=hours===0?'Less than 1 hour':hours+(hours===1?' hour':' hours');
+  let refund,refundD,pen,penD,next,notif,rule,rt,pt;
+  if(actor==='customer'){
+    pen='None';penD='Customer-side cancellation';pt='good';
+    if(status==='pending'){refund='100%';refundD='Cancelled before the provider accepted';rt='good';rule='Rule: <b>pre-acceptance cancellation</b> is always free.';}
+    else if(hours>=24){refund='100%';refundD='Cancelled 24h or more before';rt='good';rule='Rule: <b>24h+ before</b> the appointment means a full refund.';}
+    else if(hours>=4){refund='50%';refundD='Cancelled between 4h and 24h before';rt='mid';rule='Rule: <b>4h–24h before</b> means a 50% refund, since the provider already reserved the slot.';}
+    else{refund='0%';refundD='Cancelled less than 4h before';rt='bad';rule='Rule: <b>under 4h</b> means no refund, since the provider can no longer fill the slot.';}
+    next='Booking is cancelled. Slot is released back to the provider.';
+    notif='Your booking was cancelled. '+(refund==='0%'?'No refund applies under the cancellation policy.':'A '+refund+' refund has been issued to your original payment method.');
+  } else if(actor==='provider'){
+    refund='100%';refundD='Provider-side cancellations are always fully refunded';rt='good';
+    pen='Yes';penD='Applied to the provider’s account';pt='bad';
+    const canReassign=hours>=2;
+    next=canReassign?'Ops first tries to <b>reassign</b> the booking to another provider. Refund is issued only if no one is available.':'Too close to the appointment to reassign. Booking is cancelled and refunded.';
+    notif=canReassign?'If reassigned: “Your provider has changed. Same date and time, new provider: [name].” Otherwise: “Your booking was cancelled by the provider. A full refund has been issued.”':'Your booking was cancelled by the provider. A full refund has been issued.';
+    rule='Rule: the customer is never charged for a provider’s cancellation. Reassignment is tried when there’s at least <b>2h</b> left.';
+  } else {
+    refund='100%';refundD='Provider did not show up';rt='good';
+    pen='Yes';penD='Plus a review by Operations';pt='bad';
+    next='Customer reports the no-show from the booking page. The report goes to <b>Operations</b> for review. Reporting is not a cancellation, so the booking status doesn’t change until Ops decides.';
+    notif='We’re sorry your provider didn’t arrive. A full refund has been issued.';
+    rule='Rule: one no-show report per service. The report option appears shortly after the appointment start time.';
+  }
+  document.getElementById('refund').textContent=refund;document.getElementById('refundD').textContent=refundD;tone(document.getElementById('r1'),rt);
+  document.getElementById('penalty').textContent=pen;document.getElementById('penaltyD').textContent=penD;tone(document.getElementById('r2'),pt);
+  document.getElementById('next').innerHTML=next;document.getElementById('notif').textContent=notif;document.getElementById('rule').innerHTML=rule;
+}
+render();
+</script>
+</body>
+</html>
