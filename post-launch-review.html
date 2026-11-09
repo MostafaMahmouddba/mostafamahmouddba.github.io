@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Post-launch Review | Mostafa Mahmoud</title>
+<meta name="description" content="Work sample by Mostafa Mahmoud: a post-launch KPI review of a fictional feature, with the A/B test result, funnel, guardrails and the decision that followed.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#f6f7fb;--card:#fff;--ink:#0f172a;--muted:#5b6475;--line:#e4e7ef;--grid:#eef0f5;--accent:#2457d6;--accent-soft:#e8eefc;--chip:#f1f3f8;
+    --s1:#2457d6;--s2:#0d9488;--s1-soft:rgba(36,87,214,.10);
+    --good:#15803d;--good-soft:#dcfce7;--mid:#b45309;--mid-soft:#fef3c7;--bad:#b91c1c;--bad-soft:#fee2e2}
+  @media (prefers-color-scheme:dark){:root{--bg:#0b1020;--card:#131a2e;--ink:#e7ebf5;--muted:#9aa4bb;--line:#222b44;--grid:#1c2440;--accent:#6d93ff;--accent-soft:#1b2747;--chip:#1a2238;
+    --s1:#5f87f5;--s2:#1a9e95;--s1-soft:rgba(95,135,245,.14);
+    --good:#4ade80;--good-soft:#12301f;--mid:#fbbf24;--mid-soft:#3a2e10;--bad:#f87171;--bad-soft:#3b1515}}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;font-size:15px}
+  a{color:var(--accent)}
+  h1,h2,h3{font-family:"Space Grotesk",Inter,sans-serif;line-height:1.25}
+  .wrap{max-width:1040px;margin:0 auto;padding:28px 16px 60px}
+  .back{display:inline-block;margin-bottom:18px;font-size:14px;text-decoration:none}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;margin-top:16px;min-width:0}
+  .card:first-of-type{margin-top:0}
+  .tag{display:inline-block;background:var(--mid-soft);color:var(--mid);font-size:12px;font-weight:600;padding:4px 10px;border-radius:999px;margin-bottom:10px}
+  h1{font-size:clamp(24px,4vw,32px);margin-bottom:6px}
+  h2{font-size:18px;margin-bottom:4px}
+  .sub{color:var(--muted)}
+  .hint{color:var(--muted);font-size:14px;margin-bottom:12px}
+  .label{font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:600}
+  .meta{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:12px;font-size:13.5px;color:var(--muted)}
+  .meta b{color:var(--ink);font-weight:600}
+
+  .verdict{display:flex;gap:14px;align-items:flex-start;margin-top:16px;background:var(--good-soft);border-radius:14px;padding:14px 16px}
+  .verdict .ic{flex:none;width:30px;height:30px;border-radius:50%;background:var(--good);color:var(--card);display:grid;place-items:center;font-weight:700}
+  .verdict b{color:var(--good)}
+  .verdict p{font-size:14.5px}
+
+  .tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:16px}
+  .tile{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+  .tile .v{font:700 26px "Space Grotesk",sans-serif;margin-top:4px}
+  .tile .d{font-size:13px;color:var(--muted)}
+  .st{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:600;padding:1px 8px;border-radius:999px;margin-top:6px}
+  .st.ok{background:var(--good-soft);color:var(--good)}
+  .st.warn{background:var(--mid-soft);color:var(--mid)}
+
+  .chart{position:relative;margin-top:6px}
+  .chart svg{display:block;width:100%;height:auto;overflow:visible}
+  .chart text{font:12px Inter,sans-serif;fill:var(--muted)}
+  .tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--card);font-size:12.5px;padding:6px 9px;border-radius:8px;white-space:nowrap;opacity:0;transition:opacity .1s;transform:translate(-50%,-110%)}
+  .tip b{font-weight:700}
+  .legend{display:flex;flex-wrap:wrap;gap:14px;font-size:13px;color:var(--muted);margin-top:4px}
+  .legend i{display:inline-block;width:14px;height:3px;border-radius:2px;vertical-align:middle;margin-right:6px}
+  .legend i.dash{background:repeating-linear-gradient(90deg,var(--muted) 0 4px,transparent 4px 7px)}
+  .legend i.band{height:10px;background:var(--s1-soft);border-radius:3px}
+  details{margin-top:10px;font-size:13.5px}
+  summary{cursor:pointer;color:var(--accent);font-weight:500}
+  .dt{overflow-x:auto;margin-top:8px}
+
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  th,td{text-align:left;padding:8px 8px;border-bottom:1px solid var(--line);vertical-align:middle}
+  th{font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);white-space:nowrap}
+  td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+  .two .card{margin-top:0}
+  .ab{display:grid;grid-template-columns:auto 1fr auto;gap:8px 10px;align-items:center;margin-top:8px;font-size:14px}
+  .ab .track{height:22px;background:var(--chip);border-radius:0 4px 4px 0;position:relative}
+  .ab .fill{height:100%;border-radius:0 4px 4px 0}
+  .ab .val{font-weight:600;font-variant-numeric:tabular-nums}
+  .ab .nm{font-size:13.5px}
+  .ab .nm small{display:block;color:var(--muted);font-size:12px}
+  .diff{margin-top:18px}
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+  .stats div{background:var(--chip);border-radius:10px;padding:8px 10px;font-size:12.5px;color:var(--muted)}
+  .stats b{display:block;font:700 16px "Space Grotesk",sans-serif;color:var(--ink)}
+
+  .fun{margin-top:8px}
+  .frow{display:grid;grid-template-columns:150px 1fr 64px;gap:10px;align-items:center;margin-bottom:8px;font-size:13.5px}
+  .frow .bar{height:22px;border-radius:0 4px 4px 0;background:var(--s1);position:relative;cursor:default}
+  .frow .bar:hover{filter:brightness(1.1)}
+  .frow .num{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
+  .step{font-size:12px;color:var(--muted);margin:-4px 0 8px 160px}
+  .callout{margin-top:12px;border:1px dashed var(--line);border-radius:12px;padding:10px 12px;font-size:13.5px}
+
+  .guard td:first-child{width:38%}
+  ul.plain{padding-left:18px;font-size:14px}
+  ul.plain li{margin:6px 0}
+  .next{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:10px}
+  .next div{background:var(--chip);border-radius:12px;padding:12px 14px;font-size:13.5px}
+  .next b{display:block;font-size:14px;margin-bottom:2px}
+  .foot{margin-top:18px;font-size:13px;color:var(--muted);text-align:center}
+  @media (max-width:860px){.tiles{grid-template-columns:1fr 1fr}.two,.next{grid-template-columns:1fr}}
+  @media (max-width:480px){.tiles{grid-template-columns:1fr}.frow{grid-template-columns:110px 1fr 54px}.step{margin-left:120px}.stats{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="index.html">← Back to portfolio</a>
+
+  <div class="card">
+    <span class="tag">Work sample · fictional feature and numbers</span>
+    <h1>Post-launch Review: One-tap Rebook</h1>
+    <p class="sub">Six weeks after launch, this is the review I share with the team and management: did the feature move the KPI it was built for, what did the test say, what broke on the side, and what we do next. The feature comes from the <a href="roadmap-prioritization.html">Q1 roadmap sample</a>.</p>
+    <div class="meta">
+      <span>Goal: <b>repeat-order rate 22% → 26%</b></span>
+      <span>Test: <b>A/B, 50/50 split, 4 weeks</b></span>
+      <span>Full rollout: <b>week 11</b></span>
+      <span>Data up to: <b>week 12</b></span>
+    </div>
+    <div class="verdict">
+      <div class="ic" aria-hidden="true">✓</div>
+      <p><b>Decision: keep it at 100% and fix the provider-availability gap.</b> Rebook lifted repeat orders by 2.5 points with a clear test result. It also raised provider declines, because customers rebook the same provider without knowing if they are free. That is the next iteration, not a reason to roll back.</p>
+    </div>
+  </div>
+
+  <div class="tiles">
+    <div class="tile"><span class="label">Repeat-order rate</span><div class="v">24.8%</div><div class="d">from 22.1% before launch · target 26%</div><span class="st ok">✓ On track</span></div>
+    <div class="tile"><span class="label">Adoption</span><div class="v">31%</div><div class="d">of returning users tapped Rebook at least once</div><span class="st ok">✓ Above 25% target</span></div>
+    <div class="tile"><span class="label">Cancellation rate</span><div class="v">5.2%</div><div class="d">5.1% in control · guardrail</div><span class="st ok">✓ No change</span></div>
+    <div class="tile"><span class="label">Provider decline rate</span><div class="v">9.4%</div><div class="d">7.8% in control · guardrail</div><span class="st warn">⚠ Watch</span></div>
+  </div>
+
+  <div class="card">
+    <h2>Repeat-order rate, weekly</h2>
+    <p class="hint">Share of active customers who placed a second order within 30 days. Hover a week for the exact number.</p>
+    <div class="chart" id="lineWrap"><div class="tip" id="lineTip"></div></div>
+    <div class="legend">
+      <span><i style="background:var(--s1)"></i>Repeat-order rate (all users)</span>
+      <span><i class="band"></i>A/B test, 50% of users had Rebook</span>
+      <span><i class="dash"></i>Q1 target 26%</span>
+    </div>
+    <details>
+      <summary>Show as table</summary>
+      <div class="dt"><table id="lineTable"></table></div>
+    </details>
+  </div>
+
+  <div class="two">
+    <div class="card">
+      <h2>A/B test result</h2>
+      <p class="hint">Returning users, 4 weeks, repeat-order rate.</p>
+      <div class="ab">
+        <span class="nm">Control<small>n = 18,400</small></span>
+        <div class="track"><div class="fill" style="width:22.1%;background:var(--s2)"></div></div>
+        <span class="val">22.1%</span>
+        <span class="nm">Rebook<small>n = 18,300</small></span>
+        <div class="track"><div class="fill" style="width:24.6%;background:var(--s1)"></div></div>
+        <span class="val">24.6%</span>
+      </div>
+      <div class="diff">
+        <span class="label">Difference with 95% confidence interval</span>
+        <div class="chart" id="diffWrap"></div>
+      </div>
+      <div class="stats">
+        <div><b>+2.5 pts</b>absolute lift</div>
+        <div><b>+11%</b>relative lift</div>
+        <div><b>p &lt; 0.001</b>not luck</div>
+      </div>
+      <p class="hint" style="margin:12px 0 0">Sample size was set before the test to detect a 1.5-point lift. We didn't stop early when the first week looked good.</p>
+    </div>
+
+    <div class="card">
+      <h2>Rebook funnel</h2>
+      <p class="hint">Rebook group only, 4 weeks. Hover a bar for the count.</p>
+      <div class="fun" id="funnel"></div>
+      <div class="callout"><b>Biggest drop: seen → tapped (39%).</b> The card sits below the banners on the home screen. Moving it up is a cheap test for the next sprint.</div>
+    </div>
+  </div>
+
+  <div class="two">
+    <div class="card">
+      <h2>Who it worked for</h2>
+      <p class="hint">Lift by service category, A/B period.</p>
+      <div class="dt">
+        <table>
+          <thead><tr><th>Category</th><th class="n">Control</th><th class="n">Rebook</th><th class="n">Lift</th><th>Result</th></tr></thead>
+          <tbody>
+            <tr><td>Home cleaning</td><td class="n">31.0%</td><td class="n">34.8%</td><td class="n"><b>+3.8</b></td><td><span class="st ok">✓ Clear</span></td></tr>
+            <tr><td>AC maintenance</td><td class="n">18.2%</td><td class="n">19.4%</td><td class="n"><b>+1.2</b></td><td><span class="st ok">✓ Clear</span></td></tr>
+            <tr><td>Plumbing &amp; repairs</td><td class="n">9.6%</td><td class="n">10.0%</td><td class="n">+0.4</td><td><span class="st warn">– Not clear</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="hint" style="margin:10px 0 0">Rebook works where the need repeats on a schedule. That is also the first real signal for the subscription idea that was parked in "Later".</p>
+    </div>
+    <div class="card guard">
+      <h2>Guardrails</h2>
+      <p class="hint">Metrics that must not get worse while we chase the main KPI.</p>
+      <div class="dt">
+        <table>
+          <thead><tr><th>Metric</th><th class="n">Control</th><th class="n">Rebook</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>Cancellation rate</td><td class="n">5.1%</td><td class="n">5.2%</td><td><span class="st ok">✓ OK</span></td></tr>
+            <tr><td>Average order value</td><td class="n">100</td><td class="n">99</td><td><span class="st ok">✓ OK</span></td></tr>
+            <tr><td>Support tickets / 1k orders</td><td class="n">14</td><td class="n">13</td><td><span class="st ok">✓ OK</span></td></tr>
+            <tr><td>Provider decline rate</td><td class="n">7.8%</td><td class="n">9.4%</td><td><span class="st warn">⚠ Worse</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="hint" style="margin:10px 0 0">Average order value is indexed to control = 100.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>What happens next</h2>
+    <div class="next">
+      <div><b>1. Show availability before rebook</b>Check the provider's calendar first. If they're busy, offer their next free slot or a similar provider. Target: decline rate back under 8%.</div>
+      <div><b>2. Move the card up</b>A/B test the Rebook card above the home banners. Target: seen → tapped from 39% to 45%.</div>
+      <div><b>3. Close the gap to 26%</b>Rebook alone gets us to about 25%. Saved addresses ships next sprint and should cover part of the rest.</div>
+    </div>
+    <h2 style="margin-top:18px">What I'd do differently</h2>
+    <ul class="plain">
+      <li>Provider decline rate was added as a guardrail in week 2, after Ops raised it. It should have been in the PRD from day one: any feature that sends demand to one specific provider needs it.</li>
+      <li>The category split should have been planned before the test, not found after. Next time it goes into the test plan so the result isn't a lucky slice.</li>
+    </ul>
+  </div>
+
+  <p class="foot">Fictional feature, data and results for illustration. Built by Mostafa Mahmoud.</p>
+</div>
+
+<script>
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const NS = "http://www.w3.org/2000/svg";
+const el = (t, a, p) => { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); if (p) p.appendChild(e); return e; };
+
+/* ---- weekly line ---- */
+const WEEKS = [21.8,22.1,21.9,22.3,22.0,22.2,22.6,23.0,23.2,23.5,24.3,24.8];
+const PHASE = w => w < 7 ? "Before launch" : w <= 10 ? "A/B test (50%)" : "Full rollout";
+function drawLine(){
+  const wrap = document.getElementById("lineWrap"), tip = document.getElementById("lineTip");
+  wrap.querySelectorAll("svg").forEach(s => s.remove());
+  const W = 900, H = 300, m = {l:40, r:16, t:16, b:30};
+  const x = i => m.l + i * (W - m.l - m.r) / (WEEKS.length - 1);
+  const y0 = 20, y1 = 27, y = v => m.t + (y1 - v) * (H - m.t - m.b) / (y1 - y0);
+  const svg = el("svg", {viewBox:`0 0 ${W} ${H}`, role:"img", "aria-label":"Repeat-order rate by week, rising from about 22% before launch to 24.8% in week 12"});
+  wrap.insertBefore(svg, tip);
+  el("rect", {x:x(6)-0.5*(x(1)-x(0)), y:m.t, width:x(9)-x(6)+(x(1)-x(0)), height:H-m.t-m.b, fill:css("--s1-soft"), rx:4}, svg);
+  for (let v = 20; v <= 27; v++) {
+    el("line", {x1:m.l, x2:W-m.r, y1:y(v), y2:y(v), stroke:css("--grid"), "stroke-width":1}, svg);
+    if (v % 2 === 0) { const t = el("text", {x:m.l-8, y:y(v)+4, "text-anchor":"end"}, svg); t.textContent = v + "%"; }
+  }
+  WEEKS.forEach((_, i) => { const t = el("text", {x:x(i), y:H-8, "text-anchor":"middle"}, svg); t.textContent = "W" + (i+1); });
+  el("line", {x1:m.l, x2:W-m.r, y1:y(26), y2:y(26), stroke:css("--muted"), "stroke-width":1.5, "stroke-dasharray":"5 4"}, svg);
+  const tt = el("text", {x:W-m.r, y:y(26)-6, "text-anchor":"end"}, svg); tt.textContent = "Target 26%";
+  const lt = el("text", {x:x(6)-0.5*(x(1)-x(0))+6, y:m.t+14}, svg); lt.textContent = "Launch";
+  el("path", {d:WEEKS.map((v,i)=>(i?"L":"M")+x(i)+" "+y(v)).join(" "), fill:"none", stroke:css("--s1"), "stroke-width":2.5, "stroke-linejoin":"round", "stroke-linecap":"round"}, svg);
+  const last = WEEKS.length-1;
+  const lv = el("text", {x:x(last), y:y(WEEKS[last])-12, "text-anchor":"end", style:"font-weight:600;fill:"+css("--ink")}, svg); lv.textContent = WEEKS[last] + "%";
+  const cross = el("line", {y1:m.t, y2:H-m.b, stroke:css("--muted"), "stroke-width":1, opacity:0}, svg);
+  const dot = el("circle", {r:5, fill:css("--s1"), stroke:css("--card"), "stroke-width":2, opacity:0}, svg);
+  el("circle", {cx:x(last), cy:y(WEEKS[last]), r:4.5, fill:css("--s1"), stroke:css("--card"), "stroke-width":2}, svg);
+  const hit = el("rect", {x:m.l-10, y:m.t, width:W-m.l-m.r+20, height:H-m.t-m.b, fill:"transparent"}, svg);
+  const move = ev => {
+    const r = svg.getBoundingClientRect(), px = (ev.clientX - r.left) * W / r.width;
+    const i = Math.max(0, Math.min(last, Math.round((px - m.l) / (x(1) - x(0)))));
+    cross.setAttribute("x1", x(i)); cross.setAttribute("x2", x(i)); cross.setAttribute("opacity", .5);
+    dot.setAttribute("cx", x(i)); dot.setAttribute("cy", y(WEEKS[i])); dot.setAttribute("opacity", 1);
+    tip.innerHTML = `Week ${i+1} · ${PHASE(i+1)}<br><b>${WEEKS[i].toFixed(1)}%</b> repeat-order rate`;
+    tip.style.left = (x(i) * r.width / W) + "px"; tip.style.top = (y(WEEKS[i]) * r.height / H) + "px"; tip.style.opacity = 1;
+  };
+  hit.addEventListener("mousemove", move);
+  hit.addEventListener("mouseleave", () => { tip.style.opacity = 0; cross.setAttribute("opacity", 0); dot.setAttribute("opacity", 0); });
+}
+document.getElementById("lineTable").innerHTML =
+  "<thead><tr><th>Week</th><th>Phase</th><th class='n'>Repeat-order rate</th></tr></thead><tbody>" +
+  WEEKS.map((v,i)=>`<tr><td>W${i+1}</td><td>${PHASE(i+1)}</td><td class="n">${v}%</td></tr>`).join("") + "</tbody>";
+
+/* ---- difference with CI ---- */
+function drawDiff(){
+  const wrap = document.getElementById("diffWrap"); wrap.innerHTML = "";
+  const W = 420, H = 64, m = {l:12, r:12};
+  const x = v => m.l + (v + 1) * (W - m.l - m.r) / 5;   // -1 .. +4 pts
+  const svg = el("svg", {viewBox:`0 0 ${W} ${H}`, role:"img", "aria-label":"Lift of 2.5 points, 95% interval from 1.6 to 3.4 points, entirely above zero"}, wrap);
+  for (let v = -1; v <= 4; v++) {
+    el("line", {x1:x(v), x2:x(v), y1:8, y2:40, stroke:v===0?css("--muted"):css("--grid"), "stroke-width":v===0?1.5:1}, svg);
+    const t = el("text", {x:x(v), y:58, "text-anchor":"middle"}, svg); t.textContent = (v>0?"+":"") + v;
+  }
+  el("line", {x1:x(1.6), x2:x(3.4), y1:24, y2:24, stroke:css("--s1"), "stroke-width":3, "stroke-linecap":"round"}, svg);
+  [1.6,3.4].forEach(v => el("line", {x1:x(v), x2:x(v), y1:17, y2:31, stroke:css("--s1"), "stroke-width":2, "stroke-linecap":"round"}, svg));
+  el("circle", {cx:x(2.5), cy:24, r:6, fill:css("--s1"), stroke:css("--card"), "stroke-width":2}, svg);
+  const z = el("text", {x:x(0)+5, y:14}, svg); z.textContent = "no effect";
+  const lab = el("text", {x:x(2.5), y:12, "text-anchor":"middle", style:"font-weight:600;fill:"+css("--ink")}, svg); lab.textContent = "+2.5 (1.6 to 3.4)";
+}
+
+/* ---- funnel ---- */
+const FUN = [["Returning users", 18300],["Saw Rebook card", 14600],["Tapped Rebook", 5700],["Reached checkout", 4900],["Placed order", 3800]];
+document.getElementById("funnel").innerHTML = FUN.map(([n,v],i) => {
+  const step = i ? `<div class="step">↓ ${Math.round(v/FUN[i-1][1]*100)}% continue</div>` : "";
+  return step + `<div class="frow"><span>${n}</span><div class="bar" style="width:${v/FUN[0][1]*100}%" title="${n}: ${v.toLocaleString('en-US')} users"></div><span class="num">${(v/1000).toFixed(1)}k</span></div>`;
+}).join("");
+
+function drawAll(){ drawLine(); drawDiff(); }
+drawAll();
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change", drawAll);
+</script>
+<script data-goatcounter="https://mostafamahmoud.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</body>
+</html>
